@@ -1,0 +1,38 @@
+[
+    {
+        "front": "Could I pick it up in 20 minutes?",
+        "back": "¿Podría recogerla en 20 minutos?",
+        "tags": [
+            "English",
+            "Speaking",
+            "Day_8"
+        ]
+    },
+    {
+        "front": "There's a scratch on the car.",
+        "back": "Hay un rayón en el coche.",
+        "tags": [
+            "English",
+            "Speaking",
+            "Day_8"
+        ]
+    },
+    {
+        "front": "I'm just looking around.",
+        "back": "Solo estoy mirando.",
+        "tags": [
+            "English",
+            "Speaking",
+            "Test"
+        ]
+    },
+    {
+        "front": "I'm just browsing.",
+        "back": "Solo estoy mirando.",
+        "tags": [
+        "English",
+        "Speaking",
+        "Test"
+        ]
+    }
+]
