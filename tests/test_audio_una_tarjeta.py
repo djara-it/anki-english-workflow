@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import main
 
 NOTE_ID = 1790958819839
@@ -24,13 +29,15 @@ def test():
     print("La tarjeta no tiene audio.")
     print()
 
-    audio_filename = main.generate_audio(front)
+    audio = main.generate_audio(front)
 
-    if audio_filename is None:
+    if audio is None:
         print("ERROR: No se pudo generar el audio.")
         return
 
-    if not main.store_audio(audio_filename):
+    audio_filename = f"test_memory.{audio['extension']}"
+
+    if not main.store_audio(audio["data"], audio_filename):
         print("ERROR: No se pudo guardar el audio en Anki.")
         return
 

@@ -79,20 +79,6 @@ def get_note(note_id):
     return result["result"][0]
 
 def generate_audio(front):
-    hash_name = hashlib.sha256(front.encode("utf-8")).hexdigest()[:16]
-
-    mp3_filename = f"tts_{hash_name}.mp3"
-    wav_filename = f"tts_{hash_name}.wav"
-
-    # Si ya existe audio generado anteriormente, reutilizarlo
-    if os.path.exists(mp3_filename):
-        print("Audio ya generado localmente:", mp3_filename)
-        return mp3_filename
-
-    if os.path.exists(wav_filename):
-        print("Audio ya generado localmente:", wav_filename)
-        return wav_filename
-
     print("Generando audio con ElevenLabs...")
 
     # ==========================================
@@ -112,13 +98,14 @@ def generate_audio(front):
                 output_format="mp3_44100_128",
             )
 
-            with open(mp3_filename, "wb") as file:
-                for chunk in audio:
-                    file.write(chunk)
+            audio_data = b"".join(audio)
 
-            print("Audio generado con ElevenLabs:", mp3_filename)
+            print("Audio generado con ElevenLabs en memoria.")
 
-            return mp3_filename
+            return {
+                "data": audio_data,
+                "extension": "mp3"
+            }
 
         except Exception as error:
             print("ElevenLabs no disponible.")
@@ -130,7 +117,7 @@ def generate_audio(front):
         print("Intentando Gemini...")
 
     # ==========================================
-    # 2. FALLBACK A GEMINI
+    # 2. INTENTAR GEMINI COMO FALLBACK
     # ==========================================
 
     gemini_key = os.environ.get("GEMINI_API_KEY")
@@ -180,31 +167,22 @@ def generate_audio(front):
 
         audio_data = base64.b64decode(response.output_audio.data)
 
-        with open(wav_filename, "wb") as file:
-            file.write(audio_data)
+        print("Audio generado con Gemini en memoria.")
 
-        print("Audio generado con Gemini:", wav_filename)
-
-        return wav_filename
+        return {
+            "data": audio_data,
+            "extension": "wav"
+        }
 
     except Exception as error:
         print("Gemini no pudo generar el audio.")
         print("Motivo:", error)
         return None
-
-    audio_data = base64.b64decode(response.output_audio.data)
-
-    with open(filename, "wb") as file:
-        file.write(audio_data)
-
-    print("Audio generado:", filename)
-
-    return filename
-def store_audio(filename):
+    
+def store_audio(audio_data, filename):
     print("Guardando audio en Anki...")
 
-    with open(filename, "rb") as file:
-        audio_base64 = base64.b64encode(file.read()).decode("utf-8")
+    audio_base64 = base64.b64encode(audio_data).decode("utf-8")
 
     data = {
         "action": "storeMediaFile",
@@ -328,13 +306,16 @@ def process_cards(cards, config):
 
             print("No tiene audio.")
 
-            audio_filename = generate_audio(front)
+            audio = generate_audio(front)
 
-            if audio_filename is None:
+            if audio is None:
                 errors += 1
                 continue
 
-            if not store_audio(audio_filename):
+            hash_name = hashlib.sha256(front.encode("utf-8")).hexdigest()[:16]
+            audio_filename = f"tts_{hash_name}.{audio['extension']}"
+
+            if not store_audio(audio["data"], audio_filename):
                 errors += 1
                 continue
 
@@ -346,13 +327,16 @@ def process_cards(cards, config):
         else:
             print("NO EXISTE:", front)
 
-            audio_filename = generate_audio(front)
+            audio = generate_audio(front)
 
-            if audio_filename is None:
+            if audio is None:
                 errors += 1
                 continue
 
-            if not store_audio(audio_filename):
+            hash_name = hashlib.sha256(front.encode("utf-8")).hexdigest()[:16]
+            audio_filename = f"tts_{hash_name}.{audio['extension']}"
+
+            if not store_audio(audio["data"], audio_filename):
                 errors += 1
                 continue
 
