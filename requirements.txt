@@ -1,0 +1,2 @@
+google-genai==2.27.0
+elevenlabs

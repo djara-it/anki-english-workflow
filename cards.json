@@ -1,38 +1,182 @@
 [
-    {
-        "front": "Could I pick it up in 20 minutes?",
-        "back": "¿Podría recogerla en 20 minutos?",
-        "tags": [
-            "English",
-            "Speaking",
-            "Day_8"
-        ]
-    },
-    {
-        "front": "There's a scratch on the car.",
-        "back": "Hay un rayón en el coche.",
-        "tags": [
-            "English",
-            "Speaking",
-            "Day_8"
-        ]
-    },
-    {
-        "front": "I'm just looking around.",
-        "back": "Solo estoy mirando.",
-        "tags": [
-            "English",
-            "Speaking",
-            "Test"
-        ]
-    },
-    {
-        "front": "I'm just browsing.",
-        "back": "Solo estoy mirando.",
-        "tags": [
-        "English",
-        "Speaking",
-        "Test"
-        ]
-    }
+  {
+    "front": "I'd recommend...",
+    "back": "Te recomendaría... / Yo recomendaría...",
+    "pronunciation": "aid rékomend",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "These colors would go well with...",
+    "back": "Estos colores combinarían bien con...",
+    "pronunciation": "dhíiz kálers wud gou uél widh",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "It would cost fifty dollars.",
+    "back": "Costaría cincuenta dólares.",
+    "pronunciation": "it wud kost fífti dálers",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "It would take two days.",
+    "back": "Tardaría dos días.",
+    "pronunciation": "it wud téik tu déiz",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "If you'd like.",
+    "back": "Si quieres / Si le parece bien.",
+    "pronunciation": "if yud laik",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "I didn't catch that.",
+    "back": "No entendí / No capté eso.",
+    "pronunciation": "ai dídent kách dhat",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "We have a catalog that we can send you.",
+    "back": "Tenemos un catálogo que podemos enviarte.",
+    "pronunciation": "wi hav a kátalog dhat wi ken send yu",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "I'm looking for some clothes.",
+    "back": "Estoy buscando ropa.",
+    "pronunciation": "aim lúkin fer sam klóudz",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "I'm a medium.",
+    "back": "Soy talla M.",
+    "pronunciation": "aim a mídiam",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Would you like to try it on?",
+    "back": "¿Quieres probártelo?",
+    "pronunciation": "wud yu laik tu trai it on",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "I'm not sure about this color.",
+    "back": "No estoy seguro de este color.",
+    "pronunciation": "aim nat shur abáut dhis kálor",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "How much is it?",
+    "back": "¿Cuánto cuesta?",
+    "pronunciation": "hau mach iz it",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Could you gift-wrap it, please?",
+    "back": "¿Podría envolverlo para regalo, por favor?",
+    "pronunciation": "kud yu gift-ráp it pliz",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "I’ll have a coffee and a piece of cake.",
+    "back": "Tomaré un café y un trozo de pastel.",
+    "pronunciation": "ail hav a cófi en a piis ov kéik",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "I’d like it iced, please.",
+    "back": "Lo quiero con hielo, por favor.",
+    "pronunciation": "aid laik it aist pliz",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "I’d like a piece of carrot cake, please.",
+    "back": "Quisiera un trozo de pastel de zanahoria, por favor.",
+    "pronunciation": "aid laik a piis ov kárret kéik pliz",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Not for now, thanks.",
+    "back": "Por el momento no, gracias.",
+    "pronunciation": "nat fer nau thanks",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "By credit card, please.",
+    "back": "Con tarjeta de crédito, por favor.",
+    "pronunciation": "bai krédit kard pliz",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Thanks, you too.",
+    "back": "Gracias, igualmente.",
+    "pronunciation": "thanks yu tu",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "I don't have a reservation.",
+    "back": "No tengo una reserva.",
+    "pronunciation": "ai dóunt hav a réservezhon",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Two nights, please.",
+    "back": "Dos noches, por favor.",
+    "pronunciation": "tu naits pliz",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "A double room, please.",
+    "back": "Una habitación doble, por favor.",
+    "pronunciation": "a dábol rum pliz",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "What do you mean by ID?",
+    "back": "¿A qué te refieres con ID?",
+    "pronunciation": "wát du yu mín bai ai-dí",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Where can I find it?",
+    "back": "¿Dónde lo puedo encontrar?",
+    "pronunciation": "wér ken ai faind it",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Not right now, thanks.",
+    "back": "Ahora mismo no, gracias.",
+    "pronunciation": "nat rait nau thanks",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "I have two bags: a small bag and a big bag.",
+    "back": "Tengo dos maletas: una pequeña y una grande.",
+    "pronunciation": "ai hav tu bags: a smol bag en a big bag",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Could you repeat that, please?",
+    "back": "¿Podría repetir eso, por favor?",
+    "pronunciation": "kud yu ripíit dhat pliz",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Is my bag checked in?",
+    "back": "¿Está facturada mi maleta?",
+    "pronunciation": "iz mai bag chekt in",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Here you go.",
+    "back": "Aquí tiene / Aquí tienes.",
+    "pronunciation": "jir yu gou",
+    "tags": ["english", "daily"]
+  },
+  {
+    "front": "Where is Gate B12?",
+    "back": "¿Dónde está la puerta B12?",
+    "pronunciation": "wér iz geit bi tuélv",
+    "tags": ["english", "daily"]
+  }
 ]
