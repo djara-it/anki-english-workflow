@@ -308,6 +308,52 @@ This keeps the repository clean and avoids unnecessary intermediate files.
 Anki itself still stores the audio in its own `collection.media` directory, which is expected because the media must be available to Anki.
 
 ---
+# ☁️ Why No Cloud Storage?
+
+The workflow intentionally avoids using an additional cloud storage layer for cards or generated audio.
+
+This is a deliberate architectural decision, not a missing component.
+
+```text
+Gemini / ElevenLabs
+        ↓
+      Python
+        ↓
+   AnkiConnect
+        ↓
+       Anki
+        ↓
+      AnkiWeb
+```
+
+Anki already provides the storage and synchronization layer required by the learning workflow. Adding services such as Google Drive, Amazon S3 or Firebase would introduce additional infrastructure without providing enough value for the current scope.
+
+### Why?
+
+- **Less complexity** — no additional storage service or backend needs to be maintained.
+- **Lower cost** — no additional cloud storage is required for generated audio.
+- **Fewer failure points** — every extra service introduces another dependency.
+- **Better privacy** — learning content does not need to be stored in an additional third-party service.
+- **Cleaner architecture** — Python orchestrates the workflow while Anki manages the final learning data.
+- **Efficient audio handling** — generated audio is kept in memory and sent directly to AnkiConnect instead of being unnecessarily stored as temporary project files.
+
+The audio flow is therefore:
+
+```text
+ElevenLabs
+     ↓
+Audio bytes in memory
+     ↓
+AnkiConnect
+     ↓
+Anki collection.media
+     ↓
+AnkiWeb synchronization
+```
+
+Cloud infrastructure may become useful in a future version if the project evolves into a web application, requires centralized storage, scheduled server-side processing, or supports multiple users.
+
+For the current project, however, **avoiding unnecessary infrastructure keeps the system simpler, cheaper and easier to maintain.**
 
 # 🛡️ Duplicate Protection
 
