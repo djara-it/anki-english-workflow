@@ -1,138 +1,424 @@
 # Anki English Workflow
 
-A Python automation tool for creating English learning cards in Anki, with automatic text-to-speech audio and duplicate detection.
+> **AI-powered English learning automation with Gemini, ElevenLabs, Python and AnkiConnect.**
 
-The project integrates **AnkiConnect**, **ElevenLabs** and **Google Gemini** to automate the creation and audio generation of English learning cards.
+[![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-AI-4285F4?logo=google&logoColor=white)](https://ai.google.dev/)
+[![ElevenLabs](https://img.shields.io/badge/ElevenLabs-TTS-black)](https://elevenlabs.io/)
+[![AnkiConnect](https://img.shields.io/badge/AnkiConnect-API-2E7D32)](https://foosoft.net/projects/anki-connect/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## What it does
+**Anki English Workflow** is a Python-based automation project that turns useful English expressions into structured Anki flashcards and automatically adds natural AI-generated audio.
 
-The program:
+The project was created to solve a simple problem:
 
-- Reads English learning cards from `cards.json`.
-- Reads the Anki deck and note type from `config.json`.
-- Checks whether each card already exists in Anki.
-- Creates only new cards.
-- Detects existing cards using the `Anverso` field.
-- Generates natural English audio automatically.
-- Uses ElevenLabs as the primary text-to-speech provider.
-- Uses Google Gemini TTS as a fallback if ElevenLabs is unavailable.
-- Avoids generating duplicate audio.
-- Stores generated audio in Anki.
-- Adds audio to existing cards when they do not have it.
-- Reports created cards, existing cards, added audio, and errors.
+> **Learning English should take time. Managing flashcards shouldn't.**
 
-## How it works
+Instead of manually creating cards, writing translations, adding pronunciation and generating audio, the workflow automates the repetitive parts while keeping Anki as the final learning environment.
 
-```text
-                    cards.json
-                        │
-                        ▼
-                     main.py
-                        │
-                        ▼
-              Check existing notes
-                   in Anki
-                 ┌──────┴──────┐
-                 │             │
-              Exists         New card
-                 │             │
-                 ▼             ▼
-          Check for audio   Generate audio
-                 │          ElevenLabs
-                 │              │
-                 │        if unavailable
-                 │              ▼
-                 │        Gemini TTS
-                 │              │
-                 └──────┬───────┘
-                        ▼
-                   AnkiConnect
-                        │
-                        ▼
-                       Anki
-```
+---
 
-## Technologies
+## ✨ What It Does
 
-- Python
-- JSON
-- AnkiConnect API
-- Google Gemini API
-- ElevenLabs API
-- REST/HTTP APIs
-- Environment variables
-- Virtual environments
+The workflow automates the creation and enrichment of English-learning cards.
 
-## Requirements
+It can:
 
-Before using the project, install:
+- Generate useful English expressions with **Google Gemini**
+- Provide natural Spanish translations
+- Generate pronunciation approximations
+- Generate English audio with **ElevenLabs**
+- Use **Gemini TTS as an automatic fallback**
+- Send cards and audio directly to **Anki**
+- Detect existing cards and avoid duplicates
+- Detect cards that already contain audio
+- Store generated audio directly in Anki without creating temporary audio files in the project
+- Keep the card data in a simple, reusable JSON format
 
-- Python 3
-- Anki
-- AnkiConnect
-- A Gemini API key
-- An ElevenLabs API key
-
-Anki must be running when the program is executed because the program communicates with Anki through AnkiConnect.
-
-## Installation
-
-Clone or download the repository and open a terminal inside the project directory.
-
-Create the virtual environment:
-
-```cmd
-python -m venv .venv
-```
-
-Activate it:
-
-```cmd
-.venv\Scripts\activate
-```
-
-Install the project dependencies:
-
-```cmd
-.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-## Configuration
-
-### Anki
-
-Make sure Anki is running and AnkiConnect is available at:
+The result is a much more efficient learning workflow:
 
 ```text
-http://127.0.0.1:8765
+English content
+      │
+      ▼
+   Gemini AI
+      │
+      ▼
+Useful English expressions
+      │
+      ├── Spanish translation
+      ├── Pronunciation
+      └── Tags
+      │
+      ▼
+   Python Workflow
+      │
+      ├── Check existing cards
+      ├── Generate missing audio
+      └── Prevent duplicates
+      │
+      ▼
+  ElevenLabs TTS
+      │
+      └── Gemini TTS fallback
+      │
+      ▼
+   AnkiConnect
+      │
+      ▼
+ Anki — "Inglés práctico"
 ```
 
-The Anki deck and note configuration are stored in:
+---
+
+## 🎯 Why I Built This
+
+This project started from a practical need: **make English learning more efficient through automation**.
+
+Creating a useful Anki card manually involves several repetitive steps:
+
+1. Choose a useful English expression.
+2. Write the Spanish translation.
+3. Add a pronunciation approximation.
+4. Add appropriate tags.
+5. Generate or find audio.
+6. Import the card into Anki.
+7. Make sure it doesn't already exist.
+8. Repeat everything for the next expression.
+
+Doing this occasionally is fine. Doing it consistently becomes tedious.
+
+The goal of this project is therefore not to replace learning, but to **remove unnecessary friction from the learning process**.
+
+The learner focuses on learning English.
+
+The workflow handles the repetitive work.
+
+---
+
+# 🏗️ Architecture
+
+The project follows a simple pipeline architecture where each component has a specific responsibility.
 
 ```text
-config.json
+                    ┌──────────────┐
+                    │   English    │
+                    │    Input     │
+                    └──────┬───────┘
+                           │
+                           ▼
+                    ┌──────────────┐
+                    │    Gemini    │
+                    │     AI       │
+                    └──────┬───────┘
+                           │
+                           ▼
+                    ┌──────────────┐
+                    │  cards.json  │
+                    │ Structured   │
+                    │    data     │
+                    └──────┬───────┘
+                           │
+                           ▼
+                    ┌──────────────┐
+                    │    Python    │
+                    │ Orchestrator │
+                    └──────┬───────┘
+                           │
+                 ┌─────────┴─────────┐
+                 │                   │
+                 ▼                   ▼
+          Existing card?       Missing audio?
+                 │                   │
+                 │                   ▼
+                 │            ┌──────────────┐
+                 │            │ ElevenLabs   │
+                 │            │     TTS      │
+                 │            └──────┬───────┘
+                 │                   │
+                 │              If failure
+                 │                   │
+                 │                   ▼
+                 │            ┌──────────────┐
+                 │            │ Gemini TTS   │
+                 │            │   Fallback   │
+                 │            └──────┬───────┘
+                 │                   │
+                 └─────────┬─────────┘
+                           ▼
+                    ┌──────────────┐
+                    │ AnkiConnect  │
+                    └──────┬───────┘
+                           │
+                           ▼
+                    ┌──────────────┐
+                    │     Anki     │
+                    │     Deck     │
+                    └──────────────┘
 ```
 
-### API keys
+---
 
-The project uses environment variables for API keys.
+# 🧩 Technologies
 
-Set:
+| Technology | Role |
+|---|---|
+| **Python** | Main workflow orchestrator |
+| **Google Gemini** | Generates structured English-learning cards |
+| **ElevenLabs** | Primary text-to-speech provider |
+| **Gemini TTS** | Automatic audio fallback |
+| **AnkiConnect** | API bridge between Python and Anki |
+| **JSON** | Simple intermediate data format |
+| **Anki** | Final spaced-repetition learning environment |
+
+---
+
+# 🧠 Design Decisions
+
+The project was intentionally designed around simple, replaceable components rather than tightly coupling everything together.
+
+## Python as the Orchestrator
+
+Python was chosen as the central layer because it provides a simple way to:
+
+- communicate with APIs;
+- process JSON;
+- handle errors;
+- manage the workflow;
+- communicate with AnkiConnect;
+- integrate multiple AI services.
+
+Python acts as the **glue between the different systems** rather than trying to perform every task itself.
+
+---
+
+## Google Gemini for Card Generation
+
+Gemini is responsible for transforming raw learning content into structured flashcards.
+
+The generated information follows a predictable schema:
+
+```json
+{
+  "front": "I need to reschedule.",
+  "back": "Necesito cambiar la fecha.",
+  "pronunciation": "Ai nid tu rischediul.",
+  "tags": [
+    "english",
+    "daily"
+  ]
+}
+```
+
+This separation makes the AI responsible for **language understanding**, while Python remains responsible for **automation and execution**.
+
+---
+
+## ElevenLabs as the Primary TTS Provider
+
+ElevenLabs was selected as the primary text-to-speech provider because natural pronunciation is particularly important for a language-learning application.
+
+The goal is not simply to produce understandable audio, but to expose the learner to more natural spoken English.
+
+---
+
+## Gemini TTS as a Fallback
+
+The workflow does not depend exclusively on one TTS provider.
+
+If ElevenLabs fails or is unavailable, the system automatically attempts to generate the audio using Gemini TTS.
 
 ```text
-GEMINI_API_KEY
-ELEVENLABS_API_KEY
+ElevenLabs
+     │
+     ├── Success ───────► Continue
+     │
+     └── Failure
+            │
+            ▼
+        Gemini TTS
+            │
+            ├── Success ─► Continue
+            │
+            └── Failure ─► Report error
 ```
 
-Do not place API keys directly inside Python files or `config.json`.
+This makes the audio generation process more resilient.
 
-API keys should never be committed to GitHub.
+---
 
-## Card format
+## AnkiConnect Instead of Building a Flashcard System
 
-Cards are stored in `cards.json`.
+Anki already provides a mature spaced-repetition system.
 
-Example:
+Instead of reinventing:
+
+- card scheduling;
+- reviews;
+- synchronization;
+- deck management;
+- learning algorithms;
+
+the project uses **AnkiConnect** as an API bridge.
+
+This keeps the project focused on what it actually adds:
+
+> **Automating the creation and enrichment of learning material.**
+
+---
+
+## `cards.json` as an Intermediate Interface
+
+`cards.json` provides a simple boundary between content generation and the automation layer.
+
+This has several advantages:
+
+- human-readable;
+- easy to inspect;
+- easy to edit;
+- easy to version with Git;
+- independent from Anki;
+- easy to replace with another data source in the future.
+
+The project therefore does not require the AI layer and Anki integration to be directly coupled.
+
+---
+
+# 🔊 Audio Architecture
+
+Generated audio is handled entirely in memory before being sent to Anki.
+
+```text
+ElevenLabs
+     │
+     ▼
+ Audio bytes in RAM
+     │
+     ▼
+ AnkiConnect
+     │
+     ▼
+ Anki media collection
+```
+
+The workflow does **not** need to create temporary MP3 or WAV files inside the project directory.
+
+This keeps the repository clean and avoids unnecessary intermediate files.
+
+Anki itself still stores the audio in its own `collection.media` directory, which is expected because the media must be available to Anki.
+
+---
+
+# 🛡️ Duplicate Protection
+
+Automation should be safe to run repeatedly.
+
+The workflow therefore checks whether a card already exists before creating it.
+
+The search is performed using the `Anverso` field:
+
+```text
+Anverso:"English sentence"
+```
+
+This prevents the same English expression from being repeatedly inserted into the deck.
+
+Audio generation also has its own protection.
+
+If the note already contains:
+
+```text
+[sound:...]
+```
+
+the workflow does not generate another audio file.
+
+---
+
+# 🔑 Deterministic Audio Names
+
+Audio filenames are generated using a SHA-256 hash derived from the English sentence.
+
+Conceptually:
+
+```text
+English sentence
+       │
+       ▼
+    SHA-256
+       │
+       ▼
+ deterministic filename
+```
+
+For example:
+
+```text
+tts_<hash>.mp3
+```
+
+This gives the same expression a predictable media filename and reduces the possibility of naming collisions.
+
+---
+
+# 📦 Project Structure
+
+```text
+anki-english-workflow/
+│
+├── main.py
+├── gemini.py
+├── cards.json
+├── config.json
+├── requirements.txt
+├── README.md
+├── .gitignore
+│
+└── tests/
+    ├── buscar_tarjeta_sin_audio.py
+    ├── test_audio_una_tarjeta.py
+    ├── test_elevenlabs.py
+    └── test_generate.py
+```
+
+### Main components
+
+**`main.py`**
+
+The main automation engine.
+
+Responsible for:
+
+- loading configuration;
+- reading cards;
+- communicating with AnkiConnect;
+- detecting existing notes;
+- creating missing cards;
+- generating audio;
+- attaching audio to notes;
+- reporting results.
+
+**`gemini.py`**
+
+Handles AI-powered card generation using the Gemini API.
+
+**`cards.json`**
+
+Stores the structured English-learning cards.
+
+**`config.json`**
+
+Contains local configuration used by the workflow.
+
+**`tests/`**
+
+Contains focused tests for the project's main integrations and behavior.
+
+---
+
+# 📝 Card Format
+
+Cards use a deliberately simple JSON structure:
 
 ```json
 [
@@ -148,152 +434,280 @@ Example:
 ]
 ```
 
-The fields are:
+The format is intentionally kept independent from Anki's internal representation.
 
-- `front` — English phrase.
-- `back` — Spanish translation.
-- `pronunciation` — approximate pronunciation.
-- `tags` — Anki tags.
+Python handles the conversion between this simple structure and the Anki note model.
 
-The JSON structure is intentionally kept simple so cards can be generated by an external English-learning workflow.
+---
 
-## Usage
+# ⚙️ How It Works
 
-Make sure:
+The workflow can be summarized in eight steps:
 
-1. Anki is open.
-2. AnkiConnect is running.
-3. The API keys are available as environment variables.
-4. `cards.json` contains the cards to process.
+### 1. Load the cards
 
-Run:
+Python reads `cards.json`.
 
-```cmd
-.venv\Scripts\python.exe main.py
-```
+### 2. Load configuration
 
-The program checks each card and processes it automatically.
+The application loads the local configuration and API settings.
 
-Example result:
+### 3. Check Anki
+
+Each English expression is searched in the Anki deck.
+
+### 4. Prevent duplicates
+
+Existing cards are skipped instead of being recreated.
+
+### 5. Generate missing audio
+
+Cards without audio receive AI-generated speech.
+
+ElevenLabs is attempted first, followed by Gemini TTS if necessary.
+
+### 6. Store audio
+
+Audio is sent directly to AnkiConnect without creating temporary project files.
+
+### 7. Attach audio to the card
+
+The note is updated with the corresponding Anki `[sound:...]` reference.
+
+### 8. Report the result
+
+The workflow provides a summary:
 
 ```text
-Resumen:
 Creadas: 0
 Ya existentes: 30
 Audios añadidos: 0
 Errores: 0
 ```
 
-## Audio system
+This makes repeated execution safe and easy to monitor.
 
-The project uses a provider fallback system for text-to-speech.
+---
 
-### 1. ElevenLabs
+# 🚀 Installation
 
-ElevenLabs is used as the primary TTS provider because it provides natural English speech.
+## Requirements
 
-### 2. Google Gemini
+- Python 3.x
+- Anki Desktop
+- AnkiConnect
+- Google Gemini API key
+- ElevenLabs API key
 
-If ElevenLabs is unavailable or fails, the program attempts to generate the audio using Gemini TTS.
+Clone the repository:
 
-### 3. Existing audio
-
-Before generating audio, the program checks whether the audio has already been generated locally.
-
-Audio filenames are generated deterministically from the English phrase using a SHA-256 hash.
-
-This prevents unnecessary regeneration of the same audio.
-
-### 4. Existing Anki cards
-
-If a card already exists but does not contain audio, the program can add the audio to the existing note instead of creating a duplicate.
-
-If the note already contains audio, no additional audio is generated.
-
-## Project structure
-
-```text
-anki-english-workflow/
-│
-├── main.py                  # Main automation program
-├── gemini.py                # Gemini card-generation integration
-├── cards.json               # English learning cards
-├── config.json              # Anki configuration
-├── requirements.txt         # Python dependencies
-├── README.md                # Project documentation
-├── .gitignore               # Ignored files
-│
-└── tests/
-    ├── buscar_tarjeta_sin_audio.py
-    ├── test_audio_una_tarjeta.py
-    ├── test_elevenlabs.py
-    └── test_generate.py
+```bash
+git clone https://github.com/djara-it/anki-english-workflow.git
+cd anki-english-workflow
 ```
 
-The `.venv/` directory is created locally for the Python virtual environment and is intentionally excluded from Git.
+Create a virtual environment:
 
-Generated `.mp3` and `.wav` files are also excluded from Git.
-
-## Security
-
-API keys are stored outside the source code using environment variables.
-
-The following files and directories are excluded from version control:
-
-```text
-.venv/
-.env
-*.mp3
-*.wav
+```bash
+python -m venv .venv
 ```
 
-Never commit private API keys to the repository.
+Activate it on Windows:
 
-## Current status
+```cmd
+.venv\Scripts\activate
+```
 
-**Version 1 — Functional**
+Install dependencies:
 
-The current version successfully:
+```cmd
+pip install -r requirements.txt
+```
 
-- Reads cards from JSON.
-- Detects existing Anki notes.
-- Creates new notes.
-- Prevents duplicate cards.
-- Generates audio automatically.
-- Uses ElevenLabs as the primary TTS provider.
-- Uses Gemini as a TTS fallback.
-- Adds audio to existing cards when necessary.
-- Avoids duplicate audio.
-- Communicates with Anki through AnkiConnect.
-- Reports processing results and errors.
+Make sure Anki Desktop is running with AnkiConnect available.
 
-The current workflow has been tested with existing Anki cards and audio generation.
+Configure the required API keys as environment variables:
 
-## Future improvements
+```text
+GEMINI_API_KEY
+ELEVENLABS_API_KEY
+```
 
-Possible future improvements include:
+---
 
-- Automating the process of sending new English phrases directly to the workflow.
-- Removing the need to manually update `cards.json`.
-- Adding more automated tests.
-- Improving logging and error reporting.
-- Adding additional TTS providers.
-- Creating a scheduled or visual automation workflow.
-- Integrating the project with tools such as n8n in a future version.
+# ▶️ Usage
 
-## Purpose
+With Anki running:
 
-This project is a personal learning project focused on:
+```cmd
+.venv\Scripts\python.exe main.py
+```
 
-- Python programming
-- APIs
-- JSON
-- HTTP requests
-- Automation
-- External service integration
+The workflow will process the cards and report what happened.
+
+Example:
+
+```text
+Resumen:
+Creadas: 2
+Ya existentes: 28
+Audios añadidos: 3
+Errores: 0
+```
+
+Running the workflow again should not recreate cards or audio that already exist.
+
+---
+
+# 🔄 Why This Workflow Is Useful
+
+The project is useful because it combines several repetitive tasks into a single automated process.
+
+Instead of:
+
+```text
+Find phrase
+   ↓
+Translate
+   ↓
+Write pronunciation
+   ↓
+Generate audio
+   ↓
+Create Anki card
+   ↓
+Check duplicates
+   ↓
+Repeat
+```
+
+the workflow reduces the process to:
+
+```text
+Provide useful learning content
+            ↓
+       Run workflow
+            ↓
+       Study in Anki
+```
+
+The automation therefore acts as a **productivity layer around Anki**, rather than replacing Anki itself.
+
+---
+
+# 🔮 Future Improvements
+
+Possible future directions include:
+
+- automatic ingestion of English lessons or conversations;
+- more advanced card selection;
+- automatic filtering of low-value or duplicate expressions;
+- additional TTS providers;
+- a lightweight web interface;
+- richer learning statistics;
+- scheduled automation;
+- optional n8n integration;
+- additional language support.
+
+These are potential extensions rather than current features.
+
+---
+
+# 🧪 Testing
+
+The project includes focused tests for important components such as:
+
+- card retrieval;
+- audio generation;
+- ElevenLabs integration;
+- card generation.
+
+The goal is to test individual integrations without requiring the entire workflow to run every time.
+
+---
+
+# 🧭 Why Not n8n?
+
+n8n was considered as a possible orchestration layer.
+
+For the current scope, Python was preferred because the workflow is relatively compact and requires direct control over:
+
+- API responses;
+- JSON processing;
+- AnkiConnect;
+- audio bytes;
+- duplicate detection;
+- error handling.
+
+Introducing a visual workflow engine at this stage would add another dependency without providing enough benefit.
+
+However, n8n could become useful in a future version if the workflow expands to include scheduled jobs, multiple external sources or more complex automation.
+
+---
+
+# 🔐 Security
+
+API credentials should never be stored directly in the repository.
+
+The project uses environment variables for sensitive API keys.
+
+Do not commit:
+
+```text
+GEMINI_API_KEY
+ELEVENLABS_API_KEY
+```
+
+or any other credentials to Git.
+
+The `.gitignore` also excludes local environments, Python cache files and generated audio files.
+
+---
+
+# 📚 What This Project Demonstrates
+
+Although the project was created for English learning, it also demonstrates several practical software-engineering concepts:
+
+- Python automation
+- REST/API integration
+- Generative AI integration
+- Text-to-speech integration
+- JSON data modeling
+- API fallback strategies
 - Error handling
-- Audio file management
-- Anki integration
-- AI APIs
+- Duplicate prevention
+- Deterministic resource naming
+- In-memory binary data processing
+- External application integration
+- Automated testing
+- Git/GitHub workflow
 
-It is also intended to serve as a practical portfolio project demonstrating how different APIs and services can be combined into a real automation workflow.
+The project is therefore both a **personal productivity tool** and a practical example of integrating multiple modern APIs into a real-world automation pipeline.
+
+---
+
+# 👨‍💻 Project Philosophy
+
+The main idea behind this project is simple:
+
+> **Use technology to remove repetitive work, not to add unnecessary complexity.**
+
+Anki is already excellent at helping people learn.
+
+Gemini is excellent at understanding and generating language.
+
+ElevenLabs is excellent at producing natural speech.
+
+Python is excellent at connecting systems together.
+
+AnkiConnect provides the bridge between automation and Anki.
+
+Instead of rebuilding these tools, this project connects them into a single practical workflow.
+
+---
+
+## ⭐ If you find this project useful
+
+Feel free to explore the repository, experiment with the workflow, or adapt the architecture to your own learning system.
+
+**Built with Python, AI and a practical goal: spend less time managing flashcards and more time learning.**
