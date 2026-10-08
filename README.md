@@ -419,6 +419,7 @@ anki-english-workflow/
 ├── requirements.txt
 ├── README.md
 ├── .gitignore
+├── .env.example
 │
 └── tests/
     ├── buscar_tarjeta_sin_audio.py
@@ -426,6 +427,8 @@ anki-english-workflow/
     ├── test_elevenlabs.py
     └── test_generate.py
 ```
+
+Your real keys live in a local `.env` file. That file is not in Git and should never be uploaded.
 
 ### Main components
 
@@ -496,7 +499,7 @@ Python reads `cards.json`.
 
 ### 2. Load configuration
 
-The application loads the local configuration and API settings.
+The application loads `config.json` and reads API keys from your local `.env` file.
 
 ### 3. Check Anki
 
@@ -537,53 +540,93 @@ This makes repeated execution safe and easy to monitor.
 
 # 🚀 Installation
 
-## Requirements
+## What you need
 
-- Python 3.x
-- Anki Desktop
-- AnkiConnect
-- Google Gemini API key
-- ElevenLabs API key
+- Python 3
+- [Anki Desktop](https://apps.ankiweb.net/)
+- A [Google Gemini](https://aistudio.google.com/apikey) API key
+- An [ElevenLabs](https://elevenlabs.io/) API key
 
-Clone the repository:
+## 1. Download the project
 
 ```bash
 git clone https://github.com/djara-it/anki-english-workflow.git
 cd anki-english-workflow
 ```
 
-Create a virtual environment:
+## 2. Create a virtual environment
 
 ```bash
 python -m venv .venv
 ```
 
-Activate it on Windows:
+## 3. Turn it on
+
+Windows:
 
 ```cmd
 .venv\Scripts\activate
 ```
 
-Install dependencies:
+macOS / Linux:
 
-```cmd
+```bash
+source .venv/bin/activate
+```
+
+## 4. Install the packages
+
+```bash
 pip install -r requirements.txt
 ```
 
-Make sure Anki Desktop is running with AnkiConnect available.
+## 5. Connect Anki
 
-Configure the required API keys as environment variables:
+1. Open Anki.
+2. Go to **Tools → Add-ons → Get Add-ons**.
+3. Paste this code and install it: `2055492159` (AnkiConnect).
+4. Restart Anki and leave it open.
 
-```text
-GEMINI_API_KEY
-ELEVENLABS_API_KEY
+## 6. Add your API keys
+
+The project reads secrets from a local `.env` file. That file stays on your computer.
+
+**Step 1 — Copy the example file**
+
+Windows:
+
+```cmd
+copy .env.example .env
 ```
+
+macOS / Linux:
+
+```bash
+cp .env.example .env
+```
+
+**Step 2 — Open `.env` and paste your keys**
+
+```env
+GEMINI_API_KEY="your_gemini_key_here"
+ELEVENLABS_API_KEY="your_elevenlabs_key_here"
+```
+
+Replace the placeholder text with your real keys. Save the file.
+
+Do not share `.env` and do not commit it to Git. `.env.example` is only a template and has no secrets.
 
 ---
 
 # ▶️ Usage
 
-With Anki running:
+Keep Anki open, then run:
+
+```bash
+python main.py
+```
+
+On Windows you can also run:
 
 ```cmd
 .venv\Scripts\python.exe main.py
@@ -693,20 +736,15 @@ However, n8n could become useful in a future version if the workflow expands to 
 
 # 🔐 Security
 
-API credentials should never be stored directly in the repository.
+API keys never belong in `main.py`, `gemini.py`, or GitHub.
 
-The project uses environment variables for sensitive API keys.
+How this project keeps them safe:
 
-Do not commit:
+1. Copy `.env.example` to `.env`.
+2. Put your Gemini and ElevenLabs keys only in `.env`.
+3. Git ignores `.env`, so it is not uploaded.
 
-```text
-GEMINI_API_KEY
-ELEVENLABS_API_KEY
-```
-
-or any other credentials to Git.
-
-The `.gitignore` also excludes local environments, Python cache files and generated audio files.
+Also ignored: the virtual environment, Python cache files, and generated audio files.
 
 ---
 
