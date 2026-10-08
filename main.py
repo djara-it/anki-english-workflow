@@ -1,10 +1,19 @@
+import urllib.error
 import urllib.request
 import json
 import os
 import base64
 import hashlib
+from pathlib import Path
+
+from dotenv import load_dotenv
 from google import genai
 from elevenlabs.client import ElevenLabs
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
+ANKI_CONNECT_URL = "http://127.0.0.1:8765"
+ANKI_REQUEST_TIMEOUT = 15
 
 def load_cards():
     with open("cards.json", "r", encoding="utf-8") as file:
@@ -23,29 +32,85 @@ def load_config():
 def anki_request(data):
     json_data = json.dumps(data).encode("utf-8")
 
-    url = "http://127.0.0.1:8765"
-
     request = urllib.request.Request(
-        url,
+        ANKI_CONNECT_URL,
         data=json_data,
         headers={"Content-Type": "application/json"}
     )
 
-    with urllib.request.urlopen(request) as response:
-        result = response.read()
+    try:
+        with urllib.request.urlopen(
+            request,
+            timeout=ANKI_REQUEST_TIMEOUT
+        ) as response:
+            status = response.status
+            raw_response = response.read()
+    except TimeoutError:
+        print("Timeout al conectar con AnkiConnect.")
+        return {
+            "result": None,
+            "error": "Timeout al conectar con AnkiConnect."
+        }
+    except urllib.error.URLError as error:
+        print("Error al conectar con AnkiConnect:", error.reason)
+        return {
+            "result": None,
+            "error": "No se pudo conectar con AnkiConnect."
+        }
 
-    result = result.decode("utf-8")
-    result = json.loads(result)
+    if status != 200:
+        print("Respuesta HTTP inválida de AnkiConnect:", status)
+        return {
+            "result": None,
+            "error": f"HTTP {status}"
+        }
+
+    try:
+        result = json.loads(raw_response.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        print("AnkiConnect no devolvió JSON válido.")
+        return {
+            "result": None,
+            "error": "Respuesta de AnkiConnect no es JSON válido."
+        }
+
+    if not isinstance(result, dict):
+        print("Respuesta de AnkiConnect con formato incorrecto.")
+        return {
+            "result": None,
+            "error": "Respuesta de AnkiConnect con formato incorrecto."
+        }
+
+    if "result" not in result or "error" not in result:
+        print("Respuesta de AnkiConnect incompleta.")
+        return {
+            "result": None,
+            "error": "Respuesta de AnkiConnect incompleta."
+        }
 
     return result
 
 
+def escape_anki_query_value(value):
+    escaped = (
+        value
+        .replace("\\", "\\\\")
+        .replace('"', '\\"')
+        .replace("*", "\\*")
+        .replace("_", "\\_")
+    )
+
+    return escaped
+
+
 def find_note(front):
+    safe_front = escape_anki_query_value(front)
+
     data = {
         "action": "findNotes",
         "version": 6,
         "params": {
-            "query": f'Anverso:"{front}"'
+            "query": f'Anverso:"{safe_front}"'
         }
     }
 

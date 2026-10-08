@@ -1,6 +1,11 @@
 import os
 import json
+from pathlib import Path
+
+from dotenv import load_dotenv
 from google import genai
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 
 def generate_cards(text):
