@@ -15,17 +15,19 @@ load_dotenv(Path(__file__).resolve().parent / ".env")
 ANKI_CONNECT_URL = "http://127.0.0.1:8765"
 ANKI_REQUEST_TIMEOUT = 15
 
-def load_cards():
-    with open("cards.json", "r", encoding="utf-8") as file:
-        cards = json.load(file)
+BASE_DIR = Path(__file__).resolve().parent
 
+def load_cards():
+    cards_path = BASE_DIR / "cards.json"
+    with open(cards_path, "r", encoding="utf-8") as file:
+        cards = json.load(file)
     return cards
 
 
 def load_config():
-    with open("config.json", "r", encoding="utf-8") as file:
+    config_path = BASE_DIR / "config.json"
+    with open(config_path, "r", encoding="utf-8") as file:
         config = json.load(file)
-
     return config
 
 
@@ -173,8 +175,13 @@ def generate_audio(front):
             }
 
         except Exception as error:
-            print("ElevenLabs no disponible.")
-            print("Motivo:", error)
+            error_str = str(error).lower()
+            if "429" in error_str or "quota" in error_str or "rate limit" in error_str:
+                print("ElevenLabs: Límite de cuota superado o demasiadas peticiones.")
+            elif "unauthorized" in error_str or "key" in error_str:
+                print("ElevenLabs: Error de autenticación o clave API inválida.")
+            else:
+                print("ElevenLabs no disponible. Motivo:", error)
             print("Intentando Gemini...")
 
     else:
@@ -240,8 +247,13 @@ def generate_audio(front):
         }
 
     except Exception as error:
-        print("Gemini no pudo generar el audio.")
-        print("Motivo:", error)
+        error_str = str(error).lower()
+        if "429" in error_str or "quota" in error_str or "rate limit" in error_str:
+            print("Gemini TTS: Límite de cuota superado (Error 429).")
+        elif "unauthorized" in error_str or "key" in error_str:
+            print("Gemini TTS: Error de autenticación o clave API inválida.")
+        else:
+            print("Gemini TTS no pudo generar el audio. Motivo:", error)
         return None
     
 def store_audio(audio_data, filename):
@@ -269,13 +281,14 @@ def store_audio(audio_data, filename):
     return True
 
 
-def add_audio_to_note(note_id, filename):
+def add_audio_to_note(note_id, filename, field_back):
     note = get_note(note_id)
 
     if note is None:
         return False
 
-    reverso_actual = note["fields"]["Reverso"]["value"]
+    # Usamos el campo dinámico recibido por parámetro
+    reverso_actual = note["fields"][field_back]["value"]
 
     # No añadir audio si ya existe
     if "[sound:" in reverso_actual:
@@ -291,7 +304,7 @@ def add_audio_to_note(note_id, filename):
             "note": {
                 "id": note_id,
                 "fields": {
-                    "Reverso": nuevo_reverso
+                    field_back: nuevo_reverso
                 }
             }
         }
@@ -309,6 +322,10 @@ def add_audio_to_note(note_id, filename):
 
 
 def create_note(card, config, audio_filename):
+    # Leemos los nombres de los campos desde config, con valores por defecto si no están
+    field_front = config.get("field_front", "Anverso")
+    field_back = config.get("field_back", "Reverso")
+
     data = {
         "action": "addNote",
         "version": 6,
@@ -317,8 +334,8 @@ def create_note(card, config, audio_filename):
                 "deckName": config["deck"],
                 "modelName": config["model"],
                 "fields": {
-                    "Anverso": card["front"],
-                    "Reverso": (
+                    field_front: card["front"],
+                    field_back: (
                         f'{card["back"]}'
                         f'<br><br>'
                         f'Pronunciación: {card["pronunciation"]}'
@@ -342,6 +359,9 @@ def process_cards(cards, config):
     audio_added = 0
     errors = 0
 
+    # Definimos el campo de reverso de forma dinámica desde config
+    field_back = config.get("field_back", "Reverso")
+
     for card in cards:
         front = card["front"]
 
@@ -350,9 +370,13 @@ def process_cards(cards, config):
 
         notes = find_note(front)
 
+        if notes is None:
+            print("ERROR: No se pudo comprobar si la tarjeta existe.")
+            errors += 1
+            continue
+
         if notes:
             print("YA EXISTE:", front)
-
             existing += 1
 
             note_id = notes[0]
@@ -363,7 +387,7 @@ def process_cards(cards, config):
                 errors += 1
                 continue
 
-            reverso = note["fields"]["Reverso"]["value"]
+            reverso = note["fields"][field_back]["value"] # <-- Usando field_back aquí también
 
             if "[sound:" in reverso:
                 print("Ya tiene audio. No se modifica.")
@@ -384,7 +408,8 @@ def process_cards(cards, config):
                 errors += 1
                 continue
 
-            if add_audio_to_note(note_id, audio_filename):
+            # AQUÍ ES DONDE PASAMOS field_back A LA FUNCIÓN
+            if add_audio_to_note(note_id, audio_filename, field_back):
                 audio_added += 1
             else:
                 errors += 1

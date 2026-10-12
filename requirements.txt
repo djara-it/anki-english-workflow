@@ -1,3 +1,5 @@
 google-genai==2.27.0
-elevenlabs
-python-dotenv
+elevenlabs==1.50.0
+python-dotenv==1.0.1
+pytest==9.1.1
+anyio==4.14.2

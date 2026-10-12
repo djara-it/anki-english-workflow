@@ -1,4 +1,6 @@
 {
     "deck": "Inglés práctico",
-    "model": "Básico"
+    "model": "Básico",
+    "field_front": "Anverso",
+    "field_back": "Reverso"
 }
