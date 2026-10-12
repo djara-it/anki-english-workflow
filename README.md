@@ -1,6 +1,6 @@
 <h1 align="center">Anki English Workflow</h1>
 
-<div align="center">
+<p align="center">
 
   <a href="[https://www.python.org"><img](https://www.python.org"><img) src="[https://img.shields.io/badge/Python-3.10%2B-blue.svg](https://img.shields.io/badge/Python-3.10%2B-blue.svg)" alt="Python"></a>
 
@@ -12,9 +12,9 @@
 
   <a href="LICENSE"><img src="[https://img.shields.io/badge/License-MIT-yellow.svg](https://img.shields.io/badge/License-MIT-yellow.svg)" alt="License"></a>
 
-  <p><em>AI-powered English learning automation designed to eliminate repetitive friction in spaced repetition.</em></p>
+</p>
 
-</div>
+<p align="center"><em>AI-powered English learning automation designed to eliminate repetitive friction in spaced repetition.</em></p>
 
 <hr>
 
@@ -40,7 +40,7 @@
 
   <li><strong>Dual TTS with Fallback:</strong> Native, high-quality speech generation via <strong>ElevenLabs</strong>, featuring automatic failover to <strong>Gemini TTS</strong> if quotas or connection limits are reached.</li>
 
-  <li><code>Smart Duplicate Protection:</code> Automatically queries Anki via <strong>AnkiConnect</strong> to skip pre-existing entries and missing-audio updates safely.</li>
+  <li><strong>Smart Duplicate Protection:</strong> Automatically queries Anki via <strong>AnkiConnect</strong> to skip pre-existing entries and missing-audio updates safely.</li>
 
   <li><strong>Dynamic Configuration:</strong> Fully decoupled via <code>config.json</code> to handle custom decks, models, and customizable flashcard fields.</li>
 
@@ -189,4 +189,3 @@ ELEVENLABS_API_KEY="your_elevenlabs_api_key_here"</code></pre>
 <h2>License</h2>
 
 <p>Distributed under the <strong>MIT License</strong>. See <a href="LICENSE">LICENSE</a> for more details.</p>
-
