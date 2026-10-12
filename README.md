@@ -1,158 +1,191 @@
-```
 # Anki English Workflow
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org)
-[![Google Gemini](https://img.shields.io/badge/Google-Gemini-orange.svg)](https://ai.google.dev/)
-[![ElevenLabs](https://img.shields.io/badge/ElevenLabs-TTS-purple.svg)](https://elevenlabs.io/)
-[![AnkiConnect](https://img.shields.io/badge/AnkiConnect-API-green.svg)](https://foosoft.net/projects/anki-connect/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+<p align="center"> <strong>Automate your English-learning workflow with Python, AI, and Anki.</strong> </p>
 
-*AI-powered English learning automation designed to eliminate repetitive friction in spaced repetition.*
+<p align="center"> A personal project that combines programming and language learning to simplify flashcard creation and improve the daily English-learning experience. </p>
+
+<p align="center"> <img src="[https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)" alt="Python"> <img src="[https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white](https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)" alt="Google Gemini"> <img src="[https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white](https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white)" alt="ElevenLabs"> <img src="[https://img.shields.io/badge/AnkiConnect-2D8CFF?style=for-the-badge&logo=anki&logoColor=white](https://img.shields.io/badge/AnkiConnect-2D8CFF?style=for-the-badge&logo=anki&logoColor=white)" alt="AnkiConnect"> <img src="[https://img.shields.io/badge/License-See_repository-lightgrey?style=for-the-badge&logo=github](https://img.shields.io/badge/License-See_repository-lightgrey?style=for-the-badge&logo=github)" alt="License"> </p>
 
 ---
 
-## The Problem & The Goal
+## 🎬 Project Demo
 
-> *"Learning English should take time. Managing flashcards shouldn't."*
+<p align="center"> <strong>See the workflow in action.</strong> </p>
 
-Creating useful Anki cards manually is a repetitive burden: selecting expressions, writing translations, mapping pronunciation tags, searching for audio clips, and verifying duplicates. 
+[https://github.com/user-attachments/assets/10d77069-8d28-48fe-9d52-d90dcf9a6bb9](https://github.com/user-attachments/assets/10d77069-8d28-48fe-9d52-d90dcf9a6bb9)
 
-**Anki English Workflow** acts as an intelligent automation layer. Python orchestrates the pipeline, generative AI handles language understanding, and Anki remains the core spaced-repetition learning environment.
+## 📌 About the Project
 
----
+**Anki English Workflow** is a Python project designed to reduce the manual work involved in creating and managing English-learning flashcards in Anki.
 
-## Core Features
+The project uses structured JSON data and AnkiConnect to communicate with a local Anki installation. It is also an opportunity to apply practical software development concepts, including automation, configuration management, duplicate detection, and error handling.
 
-- **Intelligent Card Generation:** Transforms raw text into structured JSON data using **Google Gemini**.
-- **Dual TTS with Fallback:** Native, high-quality speech generation via **ElevenLabs**, featuring automatic failover to **Gemini TTS** if quotas or connection limits are reached.
-- **Smart Duplicate Protection:** Automatically queries Anki via **AnkiConnect** to skip pre-existing entries and missing-audio updates safely.
-- **Dynamic Configuration:** Fully decoupled via `config.json` to handle custom decks, models, and customizable flashcard fields.
-- **In-Memory Audio Pipeline:** Generates and transfers media bytes directly into Anki via deterministic `SHA-256` hashing without workspace clutter.
+The long-term goal is to create a more efficient workflow for turning useful English expressions into organized, ready-to-study flashcards.
 
----
+## ✨ Features
 
-## Architecture & Data Flow
+- 🤖 **AI-assisted content creation:** Prepare structured English-learning content with AI tools.
+- ⚡ **Flashcard automation:** Process flashcard data and send notes to Anki through AnkiConnect.
+- 🔄 **Duplicate prevention:** Check for existing notes to avoid unnecessary duplicates.
+- 🗂️ **JSON-based data management:** Keep flashcards and application settings in separate files.
+- ⚙️ **Configurable workflow:** Manage project settings without mixing them with the main application logic.
+- 📊 **Processing feedback:** Track created notes, existing notes, and errors.
+- 📚 **Practical English learning:** Organize useful expressions, translations, and pronunciation guides for everyday situations.
 
-```text
-English Input ──► Gemini AI ──► cards.json ──► Python Orchestrator
-                                                        │
-                      ┌─────────────────────────────────┘
-                      ▼
-         [ Check Existing / Missing Audio ]
-                      │
-           ┌──────────┴──────────┐
-           ▼                     ▼
-     (ElevenLabs TTS)     (Gemini TTS Fallback)
-           │                     │
-           └──────────┬──────────┘
-                      ▼
-             AnkiConnect (RAM Bytes)
-                      │
-                      ▼
-             Anki Deck ("Inglés práctico")
+## 🛠️ Tech Stack
 
-```
 
-## Project Structure
+| Technology    | Purpose                             |
+| ------------- | ----------------------------------- |
+| Python        | Application logic and automation    |
+| Google Gemini | AI-assisted content generation      |
+| ElevenLabs    | Voice and pronunciation workflows   |
+| Anki          | Spaced-repetition flashcards        |
+| AnkiConnect   | Communication with Anki Desktop     |
+| JSON          | Flashcard data and configuration    |
+| Git & GitHub  | Version control and project hosting |
 
-Plaintext
 
-```
-anki-english-workflow/
-├── main.py             # Core automation and orchestration engine
-├── gemini.py           # Google Gemini AI card generator integration
-├── cards.json          # Intermediate structured card storage
-├── config.json         # Flexible local preferences and field mappings
-├── requirements.txt    # Pinned stable Python dependencies
-├── .env.example        # Template for environment variables
-└── tests/              # Automated unit tests and mock integrations
+*The role of each integration depends on the components enabled in the current implementation.*
 
-```
+## 🔄 How It Works
 
-## Setup & Installation
+The workflow is designed to connect English-learning content with your Anki collection.
+
+1. **Generate content:** Prepare useful English phrases, translations, and pronunciation guides.
+2. **Structure the data:** Organize the flashcards in `cards.json`.
+3. **Load configuration:** Read the settings from `config.json`.
+4. **Connect to Anki:** Use AnkiConnect to communicate with the local Anki application.
+5. **Check for duplicates:** Identify notes that already exist before creating new ones.
+6. **Process the cards:** Create eligible notes and report the results.
+7. **Study and review:** Use Anki's spaced-repetition system to practice consistently.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Before running the project, make sure you have:
+
+- Python installed.
+- [Anki Desktop](https://apps.ankiweb.net/) installed.
+- [AnkiConnect](https://ankiweb.net/shared/info/2055492159) installed and configured.
+- Git installed if you want to clone the repository.
 
 ### 1. Clone the repository
 
-Bash
-
 ```
-git clone [https://github.com/djara-it/anki-english-workflow.git](https://github.com/djara-it/anki-english-workflow.git)
+git clone https://github.com/djara-it/anki-english-workflow.git
 cd anki-english-workflow
-
 ```
 
-### 2. Set up the Python Environment
+### 2. Configure AnkiConnect
 
-Bash
+Open Anki Desktop and verify that AnkiConnect is installed and responding.
 
-```
-python -m venv .venv
-source .venv/Scripts/activate  # En Git Bash (Windows)
+The default local API address is:
 
 ```
-
-### 3. Install Dependencies
-
-Bash
-
-```
-pip install -r requirements.txt
-
+http://127.0.0.1:8765
 ```
 
-### 4. Configure AnkiConnect
+Make sure the connection settings in `config.json` match the application's expected configuration.
 
-1. Open **Anki Desktop**.
-2. Go to **Tools → Add-ons → Get Add-ons**.
-3. Paste code: `2055492159` (AnkiConnect) and restart Anki.
+### 3. Prepare your flashcards
 
-### 5. Environment Variables (`.env`)
+Add your flashcards to `cards.json` using the expected data structure.
 
-Create your local `.env` file from the template:
-
-Bash
+Example:
 
 ```
-copy .env.example .env  # Windows
-
+[
+  {
+    "front": "I'm gonna wait in the lobby.",
+    "back": "Voy a esperar en el vestíbulo.",
+    "pronunciation": "Aim gona ueit in dha labi",
+    "tags": ["english", "daily"]
+  }
+]
 ```
 
-Open `.env` and add your secure API keys:
+This example illustrates the learning-content format. The fields actually processed by the application depend on its implementation and configuration.
 
-Fragmento de código
+### 4. Run the application
 
-```
-GEMINI_API_KEY="your_gemini_api_key_here"
-ELEVENLABS_API_KEY="your_elevenlabs_api_key_here"
+From the project directory, run:
 
 ```
-
-### 6. Adjust `config.json`
-
-Customize your target deck, model, and fields according to your Anki setup:
-
-JSON
-
-```
-{
-    "deck": "Inglés práctico",
-    "model": "Básico",
-    "field_front": "Anverso",
-    "field_back": "Reverso"
-}
-
+python main.py
 ```
 
-## Usage & Testing
+Ensure Anki Desktop is running and your configuration is correct before processing your cards.
 
-- **Run the main workflow:** `python main.py`
-- **Run automated test suites:** `pytest`
+> If the project requires additional dependencies, install them according to the dependency instructions included in the repository.
 
-## Security & Privacy
+## 📁 Project Structure
 
-- **Local Secrets:** API keys are strictly restricted to your local `.env` file and ignored by Git.
-- **No External DB:** Keeps complete privacy using exclusively Anki's local database.
+```
+anki-english-workflow/
+├── main.py
+├── cards.json
+├── config.json
+├── README.md
+└── .gitignore
+```
 
-## License
+- `main.py` — Main application and processing workflow.
+- `cards.json` — Structured flashcard data.
+- `config.json` — Application configuration.
+- `.gitignore` — Files and directories excluded from Git.
+- `README.md` — Project documentation.
 
-Distributed under the **MIT License**. See LICENSE for more details.
+## 🧪 Reliability and Testing
+
+Reliability is an important part of the project.
+
+The development focus includes:
+
+- Preventing duplicate note creation.
+- Handling invalid data and API errors.
+- Keeping application settings separate from processing logic.
+- Verifying that the workflow behaves as expected.
+- Improving maintainability through automated tests and incremental changes.
+
+## 🗺️ Roadmap
+
+Potential areas for future development include:
+
+- Improve onboarding and installation documentation.
+- Expand automated test coverage.
+- Improve error reporting and recovery.
+- Streamline the workflow from AI-generated content to Anki.
+- Improve support for pronunciation and audio learning.
+- Make the project easier to configure and use on a fresh installation.
+
+## 🎯 Why This Project?
+
+Learning to program is more effective when theory is applied to practical problems.
+
+This project combines a real personal need — making English practice easier — with hands-on development in Python, API integration, structured data, testing, and automation.
+
+The objective is not simply to make a script work, but to build a tool that becomes more reliable, maintainable, and useful over time.
+
+## 👨‍💻 About the Developer
+
+I'm a self-taught developer building practical projects to improve my skills in Python, automation, and software development.
+
+I focus on learning by building, testing, understanding the underlying code, and improving each project incrementally.
+
+Anki English Workflow is part of that journey.
+
+## 🔗 Resources
+
+- [GitHub Repository](https://github.com/djara-it/anki-english-workflow)
+- [Anki Official Website](https://apps.ankiweb.net/)
+- [AnkiConnect on AnkiWeb](https://ankiweb.net/shared/info/2055492159)
+- [Google AI Studio](https://aistudio.google.com/)
+- [ElevenLabs](https://elevenlabs.io/)
+
+---
+
+<p align="center"> <strong>Built with Python, curiosity, and a commitment to continuous learning.</strong> </p>
+
