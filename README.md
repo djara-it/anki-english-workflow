@@ -1,5 +1,5 @@
 ```
-# 🇬🇧 Anki English Workflow
+# Anki English Workflow
 
 <div align="center">
 
@@ -15,15 +15,15 @@
 
 ---
 
-## 🎥 Demostración en Video
+## Demostración en Video
 
 > Reproducción directa del flujo automatizado de creación de tarjetas y síntesis de voz en Anki:
 
-https://github.com/djara-it/anki-english-workflow/raw/main/anki.mp4
+[https://github.com/djara-it/anki-english-workflow/raw/main/anki.mp4](https://github.com/djara-it/anki-english-workflow/raw/main/anki.mp4)
 
 ---
 
-## 💡 The Problem & The Goal
+## The Problem & The Goal
 
 > *"Learning English should take time. Managing flashcards shouldn't."*
 
@@ -33,17 +33,17 @@ Creating useful Anki cards manually is a repetitive burden: selecting expression
 
 ---
 
-## ✨ Core Features
+## Core Features
 
-- **🤖 Intelligent Card Generation:** Transforms raw text into structured JSON data using **Google Gemini**.
-- **🔊 Dual TTS with Fallback:** Native, high-quality speech generation via **ElevenLabs**, featuring automatic failover to **Gemini TTS** if quotas or connection limits are reached.
-- **🛡️ Smart Duplicate Protection:** Automatically queries Anki via **AnkiConnect** to skip pre-existing entries and missing-audio updates safely.
-- **⚙️ Dynamic Configuration:** Fully decoupled via `config.json` to handle custom decks, models, and customizable flashcard fields (`field_front`, `field_back`).
-- **🔒 In-Memory Audio Pipeline:** Generates and transfers media bytes directly into Anki via deterministic `SHA-256` hashing (`tts_<hash>.mp3`) without polluting your local workspace with temporary files.
+- **Intelligent Card Generation:** Transforms raw text into structured JSON data using **Google Gemini**.
+- **Dual TTS with Fallback:** Native, high-quality speech generation via **ElevenLabs**, featuring automatic failover to **Gemini TTS** if quotas or connection limits are reached.
+- **Smart Duplicate Protection:** Automatically queries Anki via **AnkiConnect** to skip pre-existing entries and missing-audio updates safely.
+- **Dynamic Configuration:** Fully decoupled via `config.json` to handle custom decks, models, and customizable flashcard fields (`field_front`, `field_back`).
+- **In-Memory Audio Pipeline:** Generates and transfers media bytes directly into Anki via deterministic `SHA-256` hashing (`tts_<hash>.mp3`) without polluting your local workspace with temporary files.
 
 ---
 
-## 🏗️ Architecture & Data Flow
+## Architecture & Data Flow
 
 ```text
 English Input ──► Gemini AI ──► cards.json ──► Python Orchestrator
@@ -65,7 +65,7 @@ English Input ──► Gemini AI ──► cards.json ──► Python Orchestr
 
 ```
 
-## 📦 Project Structure
+## Project Structure
 
 Plaintext
 
@@ -82,14 +82,14 @@ anki-english-workflow/
 
 ```
 
-## ⚙️ Setup & Installation
+## Setup & Installation
 
 ### 1. Clone the repository
 
 Bash
 
 ```
-git clone [https://github.com/djara-it/anki-english-workflow.git](https://github.com/djara-it/anki-english-workflow.git)
+git clone https://github.com/djara-it/anki-english-workflow.git
 cd anki-english-workflow
 
 ```
@@ -100,10 +100,7 @@ Bash
 
 ```
 python -m venv .venv
-# Windows (Git Bash):
-source .venv/Scripts/activate
-# macOS / Linux:
-source .venv/bin/activate
+source .venv/Scripts/activate  # En Git Bash (Windows)
 
 ```
 
@@ -129,10 +126,7 @@ Create your local `.env` file from the template:
 Bash
 
 ```
-# Windows:
-copy .env.example .env
-# macOS / Linux:
-cp .env.example .env
+copy .env.example .env  # Windows
 
 ```
 
@@ -162,7 +156,7 @@ JSON
 
 ```
 
-## ▶️ Usage & Testing
+## Usage & Testing
 
 - **Run the main workflow:**
   Bash
@@ -177,12 +171,12 @@ JSON
 
   ```
 
-## 🛡️ Security & Privacy
+## Security & Privacy
 
 - **Local Secrets:** API keys are restricted to your local `.env` file and are strictly ignored by Git.
 - **No External DB Cloud Storage:** Keeps complete privacy by relying exclusively on Anki's local database and synchronization architecture.
 
-## 📜 License
+## License
 
 Distributed under the **MIT License**. See `LICENSE` for more details.
 
