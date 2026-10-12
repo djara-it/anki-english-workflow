@@ -1,28 +1,55 @@
-# Anki English Workflow
 
-  **Automate your English-learning workflow with Python, AI, and Anki.**
+
+<h1 align="center">Anki English Workflow</h1>
+
+<p align="center">
+
+  <strong>Automate your English-learning workflow with Python, AI, and Anki.</strong>
+
+</p>
+
+<p align="center">
 
   A personal project that combines programming and language learning
 
-  to simplify flashcard creation and improve the daily English-learning experience. 
+  to simplify flashcard creation and improve the daily English-learning experience.
 
-```
-<img src="[https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)" alt="Python">
-```
+</p>
 
-```
-<img src="[https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)" alt="Google Gemini">
-```
+<p align="center">
 
-```
-<img src="[https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white](https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white)" alt="ElevenLabs">
-```
+  <a href="[https://www.python.org/](https://www.python.org/)">
 
-```
-<img src="[https://img.shields.io/badge/AnkiConnect-2D8CFF?style=for-the-badge&logo=anki&logoColor=white](https://img.shields.io/badge/AnkiConnect-2D8CFF?style=for-the-badge&logo=anki&logoColor=white)" alt="AnkiConnect">
-```
+    <img src="[https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)" alt="Python">
 
-![License]([https://img.shields.io/badge/License-See%20LICENSE%20file-lightgrey?style=for-the-badge](https://img.shields.io/badge/License-See%20LICENSE%20file-lightgrey?style=for-the-badge))
+  </a>
+
+  <a href="[https://ai.google.dev/](https://ai.google.dev/)">
+
+    <img src="[https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)" alt="Google Gemini">
+
+  </a>
+
+  <a href="[https://elevenlabs.io/](https://elevenlabs.io/)">
+
+    <img src="[https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white](https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white)" alt="ElevenLabs">
+
+  </a>
+
+  <a href="[https://ankiweb.net/shared/info/2055492159](https://ankiweb.net/shared/info/2055492159)">
+
+    <img src="[https://img.shields.io/badge/AnkiConnect-2D8CFF?style=for-the-badge&logo=anki&logoColor=white](https://img.shields.io/badge/AnkiConnect-2D8CFF?style=for-the-badge&logo=anki&logoColor=white)" alt="AnkiConnect">
+
+  </a>
+
+  <a href="LICENSE">
+
+    <img src="[https://img.shields.io/badge/License-See%20LICENSE%20file-lightgrey?style=for-the-badge](https://img.shields.io/badge/License-See%20LICENSE%20file-lightgrey?style=for-the-badge)" alt="License">
+
+  </a>
+
+</p>
+
 
 ---
 
