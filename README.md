@@ -1,16 +1,36 @@
 # Anki English Workflow
 
-<p align="center"> <strong>Automate your English-learning workflow with Python, AI, and Anki.</strong> </p>
+  **Automate your English-learning workflow with Python, AI, and Anki.**
 
-<p align="center"> A personal project that combines programming and language learning to simplify flashcard creation and improve the daily English-learning experience. </p>
+  A personal project that combines programming and language learning
 
-<p align="center"> <img src="[https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)" alt="Python"> <img src="[https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white](https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)" alt="Google Gemini"> <img src="[https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white](https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white)" alt="ElevenLabs"> <img src="[https://img.shields.io/badge/AnkiConnect-2D8CFF?style=for-the-badge&logo=anki&logoColor=white](https://img.shields.io/badge/AnkiConnect-2D8CFF?style=for-the-badge&logo=anki&logoColor=white)" alt="AnkiConnect"> <img src="[https://img.shields.io/badge/License-See_repository-lightgrey?style=for-the-badge&logo=github](https://img.shields.io/badge/License-See_repository-lightgrey?style=for-the-badge&logo=github)" alt="License"> </p>
+  to simplify flashcard creation and improve the daily English-learning experience. 
+
+```
+<img src="[https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)" alt="Python">
+```
+
+```
+<img src="[https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)" alt="Google Gemini">
+```
+
+```
+<img src="[https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white](https://img.shields.io/badge/ElevenLabs-000000?style=for-the-badge&logo=elevenlabs&logoColor=white)" alt="ElevenLabs">
+```
+
+```
+<img src="[https://img.shields.io/badge/AnkiConnect-2D8CFF?style=for-the-badge&logo=anki&logoColor=white](https://img.shields.io/badge/AnkiConnect-2D8CFF?style=for-the-badge&logo=anki&logoColor=white)" alt="AnkiConnect">
+```
+
+![License]([https://img.shields.io/badge/License-See%20LICENSE%20file-lightgrey?style=for-the-badge](https://img.shields.io/badge/License-See%20LICENSE%20file-lightgrey?style=for-the-badge))
 
 ---
 
+
+
 ## 🎬 Project Demo
 
-<p align="center"> <strong>See the workflow in action.</strong> </p>
+**See the workflow in action.**
 
 [https://github.com/user-attachments/assets/10d77069-8d28-48fe-9d52-d90dcf9a6bb9](https://github.com/user-attachments/assets/10d77069-8d28-48fe-9d52-d90dcf9a6bb9)
 
@@ -31,6 +51,8 @@ The long-term goal is to create a more efficient workflow for turning useful Eng
 - ⚙️ **Configurable workflow:** Manage project settings without mixing them with the main application logic.
 - 📊 **Processing feedback:** Track created notes, existing notes, and errors.
 - 📚 **Practical English learning:** Organize useful expressions, translations, and pronunciation guides for everyday situations.
+
+
 
 ## 🛠️ Tech Stack
 
@@ -60,7 +82,38 @@ The workflow is designed to connect English-learning content with your Anki coll
 6. **Process the cards:** Create eligible notes and report the results.
 7. **Study and review:** Use Anki's spaced-repetition system to practice consistently.
 
+
+
+## 🔌 Installing AnkiConnect
+
+AnkiConnect allows Python applications to communicate with Anki Desktop through a local API.
+
+### 1. Install AnkiConnect
+
+1. Open Anki Desktop.
+2. Navigate to **Tools → Add-ons**.
+3. Select **Get Add-ons...**
+4. Enter the official AnkiConnect add-on code:
+  `2055492159`
+5. Confirm the installation and restart Anki.
+
+You can also visit the official add-on page:
+
+**[Download AnkiConnect from AnkiWeb](https://ankiweb.net/shared/info/2055492159)**
+
+### 2. Verify the connection
+
+Make sure Anki Desktop is running. AnkiConnect normally listens on:
+
+`http://127.0.0.1:8765`
+
+Your Python application can use this local endpoint to communicate with Anki.
+
+**Security note:** Keep AnkiConnect's access restricted to trusted local applications. Do not expose its API directly to the public internet.
+
 ## 🚀 Getting Started
+
+
 
 ### Prerequisites
 
@@ -71,12 +124,16 @@ Before running the project, make sure you have:
 - [AnkiConnect](https://ankiweb.net/shared/info/2055492159) installed and configured.
 - Git installed if you want to clone the repository.
 
+
+
 ### 1. Clone the repository
 
 ```
 git clone https://github.com/djara-it/anki-english-workflow.git
 cd anki-english-workflow
 ```
+
+
 
 ### 2. Configure AnkiConnect
 
@@ -121,6 +178,8 @@ Ensure Anki Desktop is running and your configuration is correct before processi
 
 > If the project requires additional dependencies, install them according to the dependency instructions included in the repository.
 
+
+
 ## 📁 Project Structure
 
 ```
@@ -138,6 +197,8 @@ anki-english-workflow/
 - `.gitignore` — Files and directories excluded from Git.
 - `README.md` — Project documentation.
 
+
+
 ## 🧪 Reliability and Testing
 
 Reliability is an important part of the project.
@@ -150,6 +211,8 @@ The development focus includes:
 - Verifying that the workflow behaves as expected.
 - Improving maintainability through automated tests and incremental changes.
 
+
+
 ## 🗺️ Roadmap
 
 Potential areas for future development include:
@@ -160,6 +223,8 @@ Potential areas for future development include:
 - Streamline the workflow from AI-generated content to Anki.
 - Improve support for pronunciation and audio learning.
 - Make the project easier to configure and use on a fresh installation.
+
+
 
 ## 🎯 Why This Project?
 
@@ -187,5 +252,4 @@ Anki English Workflow is part of that journey.
 
 ---
 
-<p align="center"> <strong>Built with Python, curiosity, and a commitment to continuous learning.</strong> </p>
-
+**Built with Python, curiosity, and a commitment to continuous learning.**
