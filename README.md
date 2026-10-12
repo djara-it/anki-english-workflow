@@ -15,14 +15,6 @@
 
 ---
 
-## Demostración en Video
-
-> Reproducción directa del flujo automatizado de creación de tarjetas y síntesis de voz en Anki:
-
-[https://github.com/djara-it/anki-english-workflow/raw/main/anki.mp4](https://github.com/djara-it/anki-english-workflow/raw/main/anki.mp4)
-
----
-
 ## The Problem & The Goal
 
 > *"Learning English should take time. Managing flashcards shouldn't."*
@@ -75,7 +67,6 @@ anki-english-workflow/
 ├── gemini.py           # Google Gemini AI card generator integration
 ├── cards.json          # Intermediate structured card storage
 ├── config.json         # Flexible local preferences and field mappings
-├── anki.mp4            # Demonstration screencast
 ├── requirements.txt    # Pinned stable Python dependencies
 ├── .env.example        # Template for environment variables
 └── tests/              # Automated unit tests and mock integrations
@@ -89,7 +80,7 @@ anki-english-workflow/
 Bash
 
 ```
-git clone https://github.com/djara-it/anki-english-workflow.git
+git clone [https://github.com/djara-it/anki-english-workflow.git](https://github.com/djara-it/anki-english-workflow.git)
 cd anki-english-workflow
 
 ```
@@ -178,5 +169,5 @@ JSON
 
 ## License
 
-Distributed under the **MIT License**. See `LICENSE` for more details.
+Distributed under the **MIT License**. See `LICENSE` for more details
 
