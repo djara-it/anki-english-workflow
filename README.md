@@ -1,191 +1,158 @@
-<h1 align="center">Anki English Workflow</h1>
+```
+# Anki English Workflow
 
-<p align="center">
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org)
+[![Google Gemini](https://img.shields.io/badge/Google-Gemini-orange.svg)](https://ai.google.dev/)
+[![ElevenLabs](https://img.shields.io/badge/ElevenLabs-TTS-purple.svg)](https://elevenlabs.io/)
+[![AnkiConnect](https://img.shields.io/badge/AnkiConnect-API-green.svg)](https://foosoft.net/projects/anki-connect/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-  <a href="[https://www.python.org"><img](https://www.python.org"><img) src="[https://img.shields.io/badge/Python-3.10%2B-blue.svg](https://img.shields.io/badge/Python-3.10%2B-blue.svg)" alt="Python"></a>
+*AI-powered English learning automation designed to eliminate repetitive friction in spaced repetition.*
 
-  <a href="[https://ai.google.dev/"><img](https://ai.google.dev/"><img) src="[https://img.shields.io/badge/Google-Gemini-orange.svg](https://img.shields.io/badge/Google-Gemini-orange.svg)" alt="Google Gemini"></a>
+---
 
-  <a href="[https://elevenlabs.io/"><img](https://elevenlabs.io/"><img) src="[https://img.shields.io/badge/ElevenLabs-TTS-purple.svg](https://img.shields.io/badge/ElevenLabs-TTS-purple.svg)" alt="ElevenLabs"></a>
+## The Problem & The Goal
 
-  <a href="[https://foosoft.net/projects/anki-connect/"><img](https://foosoft.net/projects/anki-connect/"><img) src="[https://img.shields.io/badge/AnkiConnect-API-green.svg](https://img.shields.io/badge/AnkiConnect-API-green.svg)" alt="AnkiConnect"></a>
+> *"Learning English should take time. Managing flashcards shouldn't."*
 
-  <a href="LICENSE"><img src="[https://img.shields.io/badge/License-MIT-yellow.svg](https://img.shields.io/badge/License-MIT-yellow.svg)" alt="License"></a>
+Creating useful Anki cards manually is a repetitive burden: selecting expressions, writing translations, mapping pronunciation tags, searching for audio clips, and verifying duplicates. 
 
-</p>
+**Anki English Workflow** acts as an intelligent automation layer. Python orchestrates the pipeline, generative AI handles language understanding, and Anki remains the core spaced-repetition learning environment.
 
-<p align="center"><em>AI-powered English learning automation designed to eliminate repetitive friction in spaced repetition.</em></p>
+---
 
-<hr>
+## Core Features
 
-<h2>The Problem & The Goal</h2>
+- **Intelligent Card Generation:** Transforms raw text into structured JSON data using **Google Gemini**.
+- **Dual TTS with Fallback:** Native, high-quality speech generation via **ElevenLabs**, featuring automatic failover to **Gemini TTS** if quotas or connection limits are reached.
+- **Smart Duplicate Protection:** Automatically queries Anki via **AnkiConnect** to skip pre-existing entries and missing-audio updates safely.
+- **Dynamic Configuration:** Fully decoupled via `config.json` to handle custom decks, models, and customizable flashcard fields.
+- **In-Memory Audio Pipeline:** Generates and transfers media bytes directly into Anki via deterministic `SHA-256` hashing without workspace clutter.
 
-<blockquote>
+---
 
-  <p><em>"Learning English should take time. Managing flashcards shouldn't."</em></p>
+## Architecture & Data Flow
 
-</blockquote>
-
-<p>Creating useful Anki cards manually is a repetitive burden: selecting expressions, writing translations, mapping pronunciation tags, searching for audio clips, and verifying duplicates.</p>
-
-<p><strong>Anki English Workflow</strong> acts as an intelligent automation layer. Python orchestrates the pipeline, generative AI handles language understanding, and Anki remains the core spaced-repetition learning environment.</p>
-
-<hr>
-
-<h2>Core Features</h2>
-
-<ul>
-
-  <li><strong>Intelligent Card Generation:</strong> Transforms raw text into structured JSON data using <strong>Google Gemini</strong>.</li>
-
-  <li><strong>Dual TTS with Fallback:</strong> Native, high-quality speech generation via <strong>ElevenLabs</strong>, featuring automatic failover to <strong>Gemini TTS</strong> if quotas or connection limits are reached.</li>
-
-  <li><strong>Smart Duplicate Protection:</strong> Automatically queries Anki via <strong>AnkiConnect</strong> to skip pre-existing entries and missing-audio updates safely.</li>
-
-  <li><strong>Dynamic Configuration:</strong> Fully decoupled via <code>config.json</code> to handle custom decks, models, and customizable flashcard fields.</li>
-
-  <li><strong>In-Memory Audio Pipeline:</strong> Generates and transfers media bytes directly into Anki via deterministic <code>SHA-256</code> hashing without workspace clutter.</li>
-
-</ul>
-
-<hr>
-
-<h2>Architecture & Data Flow</h2>
-
-<pre><code>English Input ──► Gemini AI ──► cards.json ──► Python Orchestrator
-
+```text
+English Input ──► Gemini AI ──► cards.json ──► Python Orchestrator
                                                         │
-
                       ┌─────────────────────────────────┘
-
                       ▼
-
          [ Check Existing / Missing Audio ]
-
                       │
-
            ┌──────────┴──────────┐
-
            ▼                     ▼
-
      (ElevenLabs TTS)     (Gemini TTS Fallback)
-
            │                     │
-
            └──────────┬──────────┘
-
                       ▼
-
              AnkiConnect (RAM Bytes)
-
                       │
-
                       ▼
+             Anki Deck ("Inglés práctico")
 
-             Anki Deck ("Inglés práctico")</code></pre>
+```
 
-<hr>
+## Project Structure
 
-<h2>Project Structure</h2>
+Plaintext
 
-<pre><code>anki-english-workflow/
-
-├── [main.py](http://main.py)             # Core automation and orchestration engine
-
-├── [gemini.py](http://gemini.py)           # Google Gemini AI card generator integration
-
+```
+anki-english-workflow/
+├── main.py             # Core automation and orchestration engine
+├── gemini.py           # Google Gemini AI card generator integration
 ├── cards.json          # Intermediate structured card storage
-
 ├── config.json         # Flexible local preferences and field mappings
-
 ├── requirements.txt    # Pinned stable Python dependencies
-
 ├── .env.example        # Template for environment variables
+└── tests/              # Automated unit tests and mock integrations
 
-└── tests/              # Automated unit tests and mock integrations</code></pre>
+```
 
-<hr>
+## Setup & Installation
 
-<h2>Setup & Installation</h2>
+### 1. Clone the repository
 
-<h3>1. Clone the repository</h3>
+Bash
 
-<pre><code>git clone [https://github.com/djara-it/anki-english-workflow.git](https://github.com/djara-it/anki-english-workflow.git)
+```
+git clone [https://github.com/djara-it/anki-english-workflow.git](https://github.com/djara-it/anki-english-workflow.git)
+cd anki-english-workflow
 
-cd anki-english-workflow</code></pre>
+```
 
-<h3>2. Set up the Python Environment</h3>
+### 2. Set up the Python Environment
 
-<pre><code>python -m venv .venv
+Bash
 
-source .venv/Scripts/activate  # En Git Bash (Windows)</code></pre>
+```
+python -m venv .venv
+source .venv/Scripts/activate  # En Git Bash (Windows)
 
-<h3>3. Install Dependencies</h3>
+```
 
-<pre><code>pip install -r requirements.txt</code></pre>
+### 3. Install Dependencies
 
-<h3>4. Configure AnkiConnect</h3>
+Bash
 
-<ol>
+```
+pip install -r requirements.txt
 
-  <li>Open <strong>Anki Desktop</strong>.</li>
+```
 
-  <li>Go to <strong>Tools → Add-ons → Get Add-ons</strong>.</li>
+### 4. Configure AnkiConnect
 
-  <li>Paste code: <code>2055492159</code> (AnkiConnect) and restart Anki.</li>
+1. Open **Anki Desktop**.
+2. Go to **Tools → Add-ons → Get Add-ons**.
+3. Paste code: `2055492159` (AnkiConnect) and restart Anki.
 
-</ol>
+### 5. Environment Variables (`.env`)
 
-<h3>5. Environment Variables (.env)</h3>
+Create your local `.env` file from the template:
 
-<pre><code>copy .env.example .env  # Windows</code></pre>
+Bash
 
-<p>Open <code>.env</code> and add your secure API keys:</p>
+```
+copy .env.example .env  # Windows
 
-<pre><code>GEMINI_API_KEY="your_gemini_api_key_here"
+```
 
-ELEVENLABS_API_KEY="your_elevenlabs_api_key_here"</code></pre>
+Open `.env` and add your secure API keys:
 
-<h3>6. Adjust config.json</h3>
+Fragmento de código
 
-<pre><code>{
+```
+GEMINI_API_KEY="your_gemini_api_key_here"
+ELEVENLABS_API_KEY="your_elevenlabs_api_key_here"
 
+```
+
+### 6. Adjust `config.json`
+
+Customize your target deck, model, and fields according to your Anki setup:
+
+JSON
+
+```
+{
     "deck": "Inglés práctico",
-
     "model": "Básico",
-
     "field_front": "Anverso",
-
     "field_back": "Reverso"
+}
 
-}</code></pre>
+```
 
-<hr>
+## Usage & Testing
 
-<h2>Usage & Testing</h2>
+- **Run the main workflow:** `python main.py`
+- **Run automated test suites:** `pytest`
 
-<ul>
+## Security & Privacy
 
-  <li><strong>Run the main workflow:</strong> <code>python [main.py](http://main.py)</code></li>
+- **Local Secrets:** API keys are strictly restricted to your local `.env` file and ignored by Git.
+- **No External DB:** Keeps complete privacy using exclusively Anki's local database.
 
-  <li><strong>Run automated test suites:</strong> <code>pytest</code></li>
+## License
 
-</ul>
-
-<hr>
-
-<h2>Security & Privacy</h2>
-
-<ul>
-
-  <li><strong>Local Secrets:</strong> API keys are strictly restricted to your local <code>.env</code> file and ignored by Git.</li>
-
-  <li><strong>No External DB:</strong> Keeps complete privacy using exclusively Anki's local database.</li>
-
-</ul>
-
-<hr>
-
-<h2>License</h2>
-
-<p>Distributed under the <strong>MIT License</strong>. See <a href="LICENSE">LICENSE</a> for more details.</p>
+Distributed under the **MIT License**. See LICENSE for more details.
