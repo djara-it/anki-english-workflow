@@ -4,11 +4,13 @@ import json
 import os
 import base64
 import hashlib
+import argparse
 from pathlib import Path
 
 from dotenv import load_dotenv
 from google import genai
 from elevenlabs.client import ElevenLabs
+from gemini import generate_cards
 
 load_dotenv(Path(__file__).resolve().parent / ".env")
 
@@ -447,8 +449,86 @@ def process_cards(cards, config):
     print("Errores:", errors)
 
 
-if __name__ == "__main__":
-    cards = load_cards()
+def validate_card(card):
+    """Una tarjeta es válida si tiene todos los campos que usa main.py."""
+    if not isinstance(card, dict):
+        return False
+    for key in ("front", "back", "pronunciation"):
+        value = card.get(key)
+        if not isinstance(value, str) or not value.strip():
+            return False
+    return isinstance(card.get("tags"), list)
+ 
+ 
+def filter_valid(cards):
+    valid = [card for card in cards if validate_card(card)]
+    skipped = len(cards) - len(valid)
+    if skipped:
+        print(f"Aviso: {skipped} tarjeta(s) descartadas por formato inválido.")
+    return valid
+ 
+ 
+def read_cards_file(path):
+    with open(path, "r", encoding="utf-8") as file:
+        data = json.load(file)
+    # Acepta tanto una lista como {"cards": [...]}
+    return data.get("cards", []) if isinstance(data, dict) else data
+ 
+ 
+def generate_to_file(text_path):
+    """Genera tarjetas con Gemini y las guarda para REVISARLAS a mano."""
+    text = Path(text_path).read_text(encoding="utf-8")
+ 
+    print("Generando tarjetas con Gemini...")
+    try:
+        response = generate_cards(text)
+    except Exception as error:
+        print("Gemini no pudo generar las tarjetas:", error)
+        return 1
+ 
+    raw = response.get("cards", []) if isinstance(response, dict) else response
+    cards = filter_valid(raw if isinstance(raw, list) else [])
+ 
+    if not cards:
+        print("Gemini no devolvió tarjetas válidas.")
+        return 1
+ 
+    out_path = BASE_DIR / "cards.generated.json"
+    with open(out_path, "w", encoding="utf-8") as file:
+        json.dump(cards, file, ensure_ascii=False, indent=2)
+ 
+    print(f"{len(cards)} tarjetas guardadas en {out_path.name}.")
+    print("Revísalas (la pronunciación es aproximada) y luego ejecuta:")
+    print(f"  python main.py --file {out_path.name}")
+    return 0
+ 
+ 
+def main():
+    parser = argparse.ArgumentParser(description="Anki English Workflow")
+    parser.add_argument(
+        "--generate", metavar="TEXTO.txt",
+        help="genera tarjetas con Gemini desde un .txt y las guarda en "
+             "cards.generated.json (no toca Anki)"
+    )
+    parser.add_argument(
+        "--file", default="cards.json",
+        help="archivo de tarjetas a procesar (por defecto cards.json)"
+    )
+    args = parser.parse_args()
+ 
+    if args.generate:
+        return generate_to_file(args.generate)
+ 
     config = load_config()
-
+    cards = filter_valid(read_cards_file(BASE_DIR / args.file))
+ 
+    if not cards:
+        print("No hay tarjetas válidas para procesar.")
+        return 1
+ 
     process_cards(cards, config)
+    return 0
+ 
+ 
+if __name__ == "__main__":
+    raise SystemExit(main())
